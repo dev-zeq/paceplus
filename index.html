@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pace+ | Treino personalizado para corredores, do seu jeito</title>
+<title>Pace+ | Treino personalizado para corredores</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --orange:#FF5A36;
@@ -14,11 +14,11 @@
     --yellow:#FFC83D;
     --green:#2BD672;
     --ink:#0B1F2A;
-    --ink-soft:#142B38;
-    --bg:#FFFFFF;
-    --bg-soft:#F6F4F1;
+    --ink-soft:#42525B;
+    --bg:#FBF8F4;
+    --card:#FFFFFF;
+    --line:rgba(11,31,42,0.08);
     --grad: linear-gradient(135deg, var(--orange), var(--yellow));
-    --grad-soft: linear-gradient(135deg, rgba(255,90,54,0.10), rgba(255,200,61,0.10));
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -33,488 +33,256 @@
     font-weight:800;
     letter-spacing:-0.02em;
   }
-  .gradient-text{
+  em{
+    font-style:normal;
     background:var(--grad);
     -webkit-background-clip:text;
     background-clip:text;
     -webkit-text-fill-color:transparent;
   }
-  .container{
-    max-width:1180px;
-    margin:0 auto;
-    padding:0 24px;
+  .container{max-width:1140px;margin:0 auto;padding:0 24px;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:13px;font-weight:700;
+    color:var(--orange-deep);
+    margin-bottom:18px;
   }
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--green);}
+
+  /* floating deco glyphs, like the reference site */
+  .deco{
+    position:absolute;
+    font-size:22px;
+    color:var(--orange);
+    opacity:0.5;
+    pointer-events:none;
+    animation:float 6s ease-in-out infinite;
+  }
+  @keyframes float{
+    0%,100%{transform:translateY(0) rotate(0deg);}
+    50%{transform:translateY(-14px) rotate(8deg);}
+  }
+
   /* NAV */
   nav{
-    position:fixed;
-    top:0;left:0;right:0;
-    z-index:100;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
     padding:18px 24px;
-    background:rgba(255,255,255,0.7);
+    background:rgba(251,248,244,0.75);
     backdrop-filter:blur(14px);
-    -webkit-backdrop-filter:blur(14px);
-    border-bottom:1px solid rgba(11,31,42,0.06);
+    border-bottom:1px solid var(--line);
   }
-  .logo{
-    font-family:'Sora',sans-serif;
-    font-weight:800;
-    font-size:22px;
-  }
-  .logo span{
-    background:var(--grad);
-    -webkit-background-clip:text;
-    background-clip:text;
-    -webkit-text-fill-color:transparent;
-  }
-  .nav-links{display:flex;gap:32px;align-items:center;}
-  .nav-links a{
-    text-decoration:none;
-    color:var(--ink);
-    font-weight:600;
-    font-size:14.5px;
-    opacity:0.75;
-    transition:opacity .2s;
-  }
+  .logo{font-family:'Sora',sans-serif;font-weight:800;font-size:21px;}
+  .logo em{display:inline;}
+  .nav-links{display:flex;gap:30px;}
+  .nav-links a{text-decoration:none;color:var(--ink);font-weight:600;font-size:14px;opacity:0.7;}
   .nav-links a:hover{opacity:1;}
   .btn{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:13px 26px;
-    border-radius:100px;
-    font-weight:700;
-    font-size:14.5px;
-    text-decoration:none;
-    border:none;
-    cursor:pointer;
+    display:inline-flex;align-items:center;gap:8px;
+    padding:13px 24px;border-radius:100px;
+    font-weight:700;font-size:14px;text-decoration:none;border:none;cursor:pointer;
     transition:transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s;
   }
   .btn-primary{
-    background:var(--grad);
-    color:var(--ink);
-    box-shadow:0 8px 24px -8px rgba(255,90,54,0.5);
+    background:var(--ink);color:white;
+    box-shadow:0 8px 20px -8px rgba(11,31,42,0.4);
   }
-  .btn-primary:hover{
-    transform:translateY(-2px) scale(1.02);
-    box-shadow:0 12px 32px -8px rgba(255,90,54,0.6);
-  }
-  .btn-ghost{
-    background:rgba(11,31,42,0.05);
-    color:var(--ink);
-  }
-  .btn-ghost:hover{background:rgba(11,31,42,0.09);}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 28px -8px rgba(11,31,42,0.5);}
+  .btn-ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line);}
+  .btn-ghost:hover{border-color:var(--ink);}
 
   /* HERO */
-  .hero{
-    position:relative;
-    display:flex;
-    flex-direction:column;
-    padding:150px 0 0;
-    overflow:hidden;
-  }
-  .hero-bg{
-    position:absolute;
-    inset:0;
-    z-index:-2;
-    background:
-      radial-gradient(circle at 15% 20%, rgba(255,90,54,0.18), transparent 45%),
-      radial-gradient(circle at 85% 15%, rgba(255,200,61,0.20), transparent 45%),
-      radial-gradient(circle at 50% 90%, rgba(43,214,114,0.16), transparent 50%),
-      var(--bg);
-    animation:bgshift 12s ease-in-out infinite alternate;
-  }
-  @keyframes bgshift{
-    0%{filter:hue-rotate(0deg);}
-    100%{filter:hue-rotate(12deg);}
-  }
-  /* speed lines ambient motion */
-  .speed-lines{
-    position:absolute;
-    inset:0;
-    z-index:-1;
-    pointer-events:none;
-    overflow:hidden;
-  }
-  .speed-lines span{
-    position:absolute;
-    height:2px;
-    border-radius:2px;
-    background:linear-gradient(90deg, transparent, rgba(255,90,54,0.35), transparent);
-    animation:dash 3.2s linear infinite;
-  }
-  .speed-lines span:nth-child(1){top:22%;width:180px;left:-200px;animation-delay:0s;}
-  .speed-lines span:nth-child(2){top:48%;width:120px;left:-200px;animation-delay:1s;}
-  .speed-lines span:nth-child(3){top:68%;width:220px;left:-200px;animation-delay:2s;}
-  .speed-lines span:nth-child(4){top:85%;width:140px;left:-200px;animation-delay:1.6s;}
-  @keyframes dash{
-    0%{transform:translateX(0);opacity:0;}
-    10%{opacity:1;}
-    90%{opacity:1;}
-    100%{transform:translateX(calc(100vw + 400px));opacity:0;}
-  }
-  .hero-top{
-    text-align:center;
-    max-width:760px;
-    margin:0 auto;
-  }
-  .hero-top .lead{margin-left:auto;margin-right:auto;}
-  .hero-top .hero-ctas, .hero-top .hero-stats{justify-content:center;}
-  .eyebrow{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:8px 16px;
-    border-radius:100px;
-    background:rgba(255,90,54,0.10);
-    color:var(--orange-deep);
-    font-weight:700;
-    font-size:13px;
-    margin-bottom:24px;
-  }
-  .eyebrow .dot{
-    width:7px;height:7px;border-radius:50%;
-    background:var(--green);
-    box-shadow:0 0 0 4px rgba(43,214,114,0.25);
-    animation:blink 1.8s ease-in-out infinite;
-  }
-  @keyframes blink{
-    0%,100%{opacity:1;}
-    50%{opacity:0.4;}
-  }
-  .hero h1{
-    font-size:clamp(38px,5.4vw,64px);
-    line-height:1.04;
-    margin-bottom:22px;
-  }
-  .hero p.lead{
-    font-size:18px;
-    line-height:1.6;
-    color:rgba(11,31,42,0.65);
-    max-width:480px;
-    margin-bottom:36px;
-  }
-  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:48px;}
-  .hero-stats{display:flex;gap:36px;flex-wrap:wrap;}
-  .stat .num{
-    font-family:'Sora',sans-serif;
-    font-weight:800;
-    font-size:30px;
-  }
-  .stat .label{
-    font-size:13px;
-    color:rgba(11,31,42,0.55);
-    font-weight:600;
-  }
+  .hero{position:relative;padding:150px 0 0;overflow:hidden;}
+  .hero-top{text-align:center;max-width:760px;margin:0 auto;position:relative;}
+  .hero h1{font-size:clamp(36px,5.6vw,60px);line-height:1.06;margin-bottom:20px;}
+  .hero .lead{font-size:17.5px;line-height:1.6;color:var(--ink-soft);max-width:540px;margin:0 auto 32px;}
+  .hero-ctas{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:40px;}
 
-  /* VIDEO BANNER */
+  .proof-row{
+    display:flex;align-items:center;justify-content:center;gap:14px;
+    margin-bottom:56px;
+  }
+  .proof-avatars{display:flex;}
+  .proof-avatars span{
+    width:34px;height:34px;border-radius:50%;
+    background:var(--grad);
+    border:2.5px solid var(--bg);
+    margin-left:-10px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:11px;font-weight:800;color:white;
+  }
+  .proof-avatars span:first-child{margin-left:0;}
+  .proof-text{font-size:13.5px;color:var(--ink-soft);}
+  .proof-text b{color:var(--ink);}
+
   .video-banner{
-    position:relative;
-    width:100%;
-    margin-top:56px;
-    aspect-ratio:21/9;
-    overflow:hidden;
-    box-shadow:0 -20px 60px -30px rgba(255,90,54,0.35) inset;
+    position:relative;width:100%;margin-top:0;
+    aspect-ratio:21/9;overflow:hidden;
+    border-radius:28px 28px 0 0;
   }
-  .video-banner::after{
-    content:'';
-    position:absolute;
-    inset:0;
-    background:linear-gradient(180deg, rgba(11,31,42,0.05) 0%, transparent 18%, transparent 82%, rgba(11,31,42,0.18) 100%);
-    pointer-events:none;
-  }
-  .video-banner video{
-    width:100%;
-    height:100%;
-    display:block;
-    object-fit:cover;
-    object-position:center 25%;
-  }
-  .avatar{width:34px;height:34px;border-radius:50%;background:var(--grad);}
+  .video-banner video{width:100%;height:100%;display:block;object-fit:cover;object-position:center 25%;}
 
-  /* SECTION GENERAL */
+  /* MARQUEE */
+  .marquee-wrap{
+    background:var(--ink);
+    overflow:hidden;
+    padding:18px 0;
+  }
+  .marquee{
+    display:flex;
+    width:max-content;
+    animation:scroll 28s linear infinite;
+  }
+  .marquee span{
+    color:white;
+    font-size:14.5px;
+    font-weight:700;
+    padding:0 28px;
+    white-space:nowrap;
+    opacity:0.9;
+  }
+  .marquee span::after{content:'✦';margin-left:28px;color:var(--orange);}
+  @keyframes scroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+
   section{padding:110px 0;position:relative;}
-  .section-head{
-    text-align:center;
-    max-width:620px;
-    margin:0 auto 64px;
-  }
-  .section-head .eyebrow{margin-bottom:18px;}
-  .section-head h2{
-    font-size:clamp(28px,3.6vw,42px);
-    margin-bottom:14px;
-    line-height:1.1;
-  }
-  .section-head p{
-    color:rgba(11,31,42,0.6);
-    font-size:16.5px;
-    line-height:1.6;
-  }
-  .reveal{
-    opacity:0;
-    transform:translateY(28px);
-    transition:opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1);
-  }
+  .section-head{max-width:600px;margin:0 0 56px;}
+  .section-head.center{margin:0 auto 56px;text-align:center;}
+  .section-head h2{font-size:clamp(28px,3.6vw,42px);line-height:1.12;}
+
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s cubic-bezier(.2,.8,.2,1);}
   .reveal.in{opacity:1;transform:translateY(0);}
 
-  /* HOW IT WORKS / PERSONALIZATION */
-  .journey{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:28px;
-    position:relative;
+  /* PAIN POINTS */
+  .pain-tag{
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(255,90,54,0.08);
+    color:var(--orange-deep);
+    padding:7px 14px;border-radius:100px;
+    font-size:12.5px;font-weight:700;
+    margin-bottom:18px;
   }
-  .journey-card{
-    background:var(--bg-soft);
-    border-radius:24px;
-    padding:32px 26px;
+  .pain-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+  .pain-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:22px;
+    padding:30px 28px;
     position:relative;
     transition:transform .3s, box-shadow .3s;
-    border:1px solid rgba(11,31,42,0.05);
   }
-  .journey-card:hover{
-    transform:translateY(-8px);
-    box-shadow:0 24px 48px -16px rgba(255,90,54,0.25);
+  .pain-card:hover{transform:translateY(-6px);box-shadow:0 24px 48px -20px rgba(11,31,42,0.18);}
+  .pain-num{
+    font-family:'Sora',sans-serif;font-weight:800;
+    font-size:13px;color:var(--orange);
+    opacity:0.6;
+    margin-bottom:16px;
   }
-  .journey-icon{
-    width:54px;height:54px;
-    border-radius:16px;
-    background:var(--grad);
-    display:flex;align-items:center;justify-content:center;
-    margin-bottom:22px;
-    font-size:24px;
-  }
-  .journey-card h3{
-    font-size:19px;
-    margin-bottom:10px;
-  }
-  .journey-card p{
-    color:rgba(11,31,42,0.6);
-    font-size:14.5px;
-    line-height:1.6;
-  }
-  .journey-arrow{
-    position:absolute;
-    top:50%;
-    right:-22px;
-    transform:translateY(-50%);
-    font-size:22px;
-    color:var(--orange-deep);
-    opacity:0.4;
-  }
+  .pain-icon{font-size:28px;margin-bottom:14px;display:block;}
+  .pain-card h3{font-size:17.5px;margin-bottom:10px;}
+  .pain-card p{font-size:14px;line-height:1.6;color:var(--ink-soft);}
 
-  /* BRUNA SECTION */
-  .bruna{
+  /* HOW IT WORKS - two column with checklist, like reference */
+  .flow-grid{display:grid;grid-template-columns:0.95fr 1.05fr;gap:60px;align-items:center;}
+  .flow-visual{
     background:var(--ink);
-    color:white;
-    border-radius:36px;
-    margin:0 24px;
+    border-radius:26px;
+    padding:34px;
+    position:relative;
     overflow:hidden;
+  }
+  .flow-visual::before{
+    content:'';position:absolute;inset:0;
+    background:radial-gradient(circle at 80% 10%, rgba(255,90,54,0.25), transparent 50%);
+  }
+  .flow-card{
     position:relative;
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:16px;
+    padding:18px;
+    margin-bottom:12px;
+    display:flex;align-items:center;gap:14px;
   }
-  .bruna-inner{
-    max-width:1180px;
-    margin:0 auto;
-    display:grid;
-    grid-template-columns:0.9fr 1.1fr;
-    align-items:center;
-  }
-  .bruna-img{
-    position:relative;
-    height:100%;
-    min-height:480px;
-  }
-  .bruna-img img{
-    width:100%;height:100%;
-    object-fit:cover;
-    display:block;
-  }
-  .bruna-img::after{
-    content:'';
-    position:absolute;
-    inset:0;
-    background:linear-gradient(90deg, rgba(11,31,42,0) 60%, var(--ink) 100%);
-  }
-  .bruna-content{padding:60px 56px 60px 20px;}
-  .bruna-badge{
-    display:inline-flex;align-items:center;gap:8px;
-    background:rgba(255,200,61,0.15);
-    color:var(--yellow);
-    padding:7px 14px;
-    border-radius:100px;
-    font-size:12.5px;
-    font-weight:700;
-    margin-bottom:20px;
-  }
-  .bruna-content h2{
-    font-size:clamp(26px,3vw,36px);
-    margin-bottom:18px;
-    line-height:1.15;
-  }
-  .bruna-quote{
-    font-size:17px;
-    line-height:1.65;
-    color:rgba(255,255,255,0.78);
-    font-style:italic;
-    margin-bottom:26px;
-    border-left:3px solid var(--orange);
-    padding-left:18px;
-  }
-  .bruna-name{font-weight:800;font-family:'Sora',sans-serif;font-size:16px;}
-  .bruna-role{font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:28px;}
-
-  /* COACH SECTION */
-  .coach-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:60px;
-    align-items:center;
-  }
-  .coach-visual{
-    position:relative;
-    border-radius:28px;
-    overflow:hidden;
-    aspect-ratio:4/5;
-  }
-  .coach-visual img{
-    width:100%;height:100%;object-fit:cover;
-  }
-  .coach-flow{
-    position:absolute;
-    bottom:20px;left:20px;right:20px;
-    background:rgba(255,255,255,0.92);
-    backdrop-filter:blur(10px);
-    border-radius:18px;
-    padding:18px 20px;
-    display:flex;
-    align-items:center;
-    gap:14px;
-  }
-  .check-circle{
-    width:38px;height:38px;border-radius:50%;
+  .flow-card:last-child{margin-bottom:0;}
+  .flow-check{
+    width:30px;height:30px;border-radius:50%;
     background:var(--green);
     display:flex;align-items:center;justify-content:center;
-    font-weight:800;color:white;
+    color:white;font-weight:800;font-size:13px;
     flex-shrink:0;
   }
-  .coach-flow .t{font-size:13.5px;font-weight:700;}
-  .coach-flow .s{font-size:12px;color:rgba(11,31,42,0.55);}
-  .coach-list{list-style:none;margin-top:28px;display:flex;flex-direction:column;gap:18px;}
-  .coach-list li{
-    display:flex;gap:14px;
-    align-items:flex-start;
-  }
-  .coach-list .ico{
-    width:32px;height:32px;border-radius:10px;
-    background:var(--grad-soft);
-    display:flex;align-items:center;justify-content:center;
-    flex-shrink:0;
-    color:var(--orange-deep);
-    font-weight:800;
-  }
-  .coach-list .txt b{display:block;font-size:15px;margin-bottom:3px;}
-  .coach-list .txt span{font-size:14px;color:rgba(11,31,42,0.6);}
-
-  /* INTEGRATIONS / WEARABLES */
-  .integrations{
-    background:var(--ink);
-    border-radius:36px;
-    margin:0 24px;
-    padding:80px 50px;
-    position:relative;
-    overflow:hidden;
-  }
-  .integrations::before{
-    content:'';
-    position:absolute;
-    inset:0;
-    background:radial-gradient(circle at 80% 20%, rgba(255,90,54,0.18), transparent 50%),
-               radial-gradient(circle at 10% 80%, rgba(43,214,114,0.14), transparent 50%);
-  }
-  .integrations-head{
-    position:relative;
-    text-align:center;
-    max-width:620px;
-    margin:0 auto 56px;
-  }
-  .integrations-head .eyebrow{
-    background:rgba(255,200,61,0.14);
-    color:var(--yellow);
-  }
-  .integrations-head h2{color:white;margin-bottom:14px;}
-  .integrations-head p{color:rgba(255,255,255,0.62);font-size:16.5px;line-height:1.6;}
-  .device-grid{
-    position:relative;
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:20px;
-  }
-  .device-card{
-    background:rgba(255,255,255,0.05);
-    border:1px solid rgba(255,255,255,0.10);
-    border-radius:22px;
-    padding:28px 18px;
-    text-align:center;
-    transition:transform .3s, background .3s, border-color .3s;
-  }
-  .device-card:hover{
-    transform:translateY(-6px);
-    background:rgba(255,255,255,0.08);
-    border-color:rgba(255,200,61,0.3);
-  }
-  .device-icon{
-    width:54px;height:54px;
-    border-radius:16px;
-    margin:0 auto 16px;
-    display:flex;align-items:center;justify-content:center;
-    font-size:24px;
+  .flow-card .t{color:white;font-weight:700;font-size:13.5px;}
+  .flow-card .s{color:rgba(255,255,255,0.5);font-size:12px;}
+  .check-list{list-style:none;display:flex;flex-direction:column;gap:18px;margin-top:24px;}
+  .check-list li{display:flex;gap:14px;align-items:flex-start;font-size:15px;font-weight:600;}
+  .check-list .ico{
+    width:26px;height:26px;border-radius:50%;
     background:var(--grad);
-  }
-  .device-card .name{font-family:'Sora',sans-serif;font-weight:800;font-size:15px;color:white;margin-bottom:6px;}
-  .device-card .status{font-size:11.5px;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:0.03em;}
-  .integrations-note{
-    position:relative;
-    text-align:center;
-    margin-top:40px;
-    font-size:13.5px;
-    color:rgba(255,255,255,0.45);
+    display:flex;align-items:center;justify-content:center;
+    color:white;font-size:12px;font-weight:800;
+    flex-shrink:0;margin-top:1px;
   }
 
-  /* TESTIMONIALS */
-  .testi-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:24px;
+  /* WHAT YOU GET - numbered grid like reference */
+  .get-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .get-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:26px 22px;
+    transition:transform .3s, box-shadow .3s, border-color .3s;
   }
+  .get-card:hover{transform:translateY(-5px);box-shadow:0 20px 40px -18px rgba(11,31,42,0.16);border-color:transparent;}
+  .get-num{font-family:'Sora',sans-serif;font-weight:800;font-size:12.5px;color:var(--orange);opacity:0.6;margin-bottom:14px;}
+  .get-icon{font-size:24px;margin-bottom:14px;display:block;}
+  .get-card h3{font-size:15.5px;margin-bottom:8px;}
+  .get-card p{font-size:13px;line-height:1.55;color:var(--ink-soft);}
+
+  /* TESTIMONIAL big card */
   .testi-card{
-    background:var(--bg-soft);
-    border-radius:22px;
-    padding:26px;
-    transition:transform .3s, box-shadow .3s;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:30px;
+    padding:50px;
+    display:grid;
+    grid-template-columns:auto 1fr;
+    gap:40px;
+    align-items:center;
   }
-  .testi-card:hover{transform:translateY(-6px);box-shadow:0 20px 40px -16px rgba(11,31,42,0.15);}
-  .testi-top{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
-  .testi-top img{
-    width:46px;height:46px;border-radius:50%;object-fit:cover;
+  .testi-photo{
+    width:140px;height:140px;
+    border-radius:24px;
+    object-fit:cover;
   }
-  .testi-top .n{font-weight:700;font-size:14.5px;}
-  .testi-top .c{font-size:12px;color:rgba(11,31,42,0.5);}
-  .testi-card p{font-size:14.5px;line-height:1.6;color:rgba(11,31,42,0.75);}
-  .stars{color:var(--green);font-size:13px;margin-top:14px;}
+  .testi-tag{font-size:12.5px;font-weight:700;color:var(--orange-deep);margin-bottom:6px;}
+  .testi-stars{color:var(--green);font-size:14px;margin-bottom:18px;}
+  .testi-quote{font-size:19px;line-height:1.55;color:var(--ink);margin-bottom:22px;font-weight:500;}
+  .testi-name{font-family:'Sora',sans-serif;font-weight:800;font-size:15.5px;}
+  .testi-role{font-size:13px;color:var(--ink-soft);}
+  .testi-verified{
+    display:inline-flex;align-items:center;gap:5px;
+    font-size:11.5px;font-weight:700;color:var(--green);
+    margin-top:8px;
+  }
 
   /* PRICING */
-  .pricing-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:24px;
+  .price-launch{
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(255,200,61,0.18);
+    color:#9a6b00;
+    padding:8px 16px;border-radius:100px;
+    font-size:13px;font-weight:700;
+    margin-bottom:40px;
   }
+  .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
   .price-card{
-    border-radius:26px;
-    padding:36px 30px;
-    border:1.5px solid rgba(11,31,42,0.08);
-    background:white;
+    background:var(--card);
+    border:1.5px solid var(--line);
+    border-radius:24px;
+    padding:34px 28px;
     position:relative;
     transition:transform .3s, box-shadow .3s;
   }
@@ -523,142 +291,114 @@
     background:var(--ink);
     color:white;
     border:none;
-    transform:scale(1.04);
-    box-shadow:0 30px 60px -20px rgba(255,90,54,0.35);
+    box-shadow:0 30px 60px -20px rgba(255,90,54,0.3);
   }
-  .price-card.featured:hover{transform:scale(1.04) translateY(-6px);}
-  .featured-badge{
-    position:absolute;
-    top:-13px;left:50%;
-    transform:translateX(-50%);
+  .price-badge{
+    position:absolute;top:-13px;left:28px;
     background:var(--grad);
     color:var(--ink);
-    font-size:11.5px;
-    font-weight:700;
-    padding:6px 16px;
-    border-radius:100px;
+    font-size:11px;font-weight:800;
+    padding:6px 14px;border-radius:100px;
   }
-  .price-card h3{font-size:18px;margin-bottom:8px;}
-  .price-card .desc{font-size:13.5px;color:rgba(11,31,42,0.55);margin-bottom:22px;}
-  .price-card.featured .desc{color:rgba(255,255,255,0.6);}
-  .price-val{
-    font-family:'Sora',sans-serif;font-weight:800;
-    font-size:38px;margin-bottom:4px;
-  }
-  .price-val span{font-size:14px;font-weight:600;opacity:0.6;}
-  .price-list{list-style:none;margin:26px 0 30px;display:flex;flex-direction:column;gap:11px;}
-  .price-list li{font-size:13.5px;display:flex;gap:8px;align-items:flex-start;}
+  .price-card h3{font-size:16.5px;margin-bottom:6px;}
+  .price-card .sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:22px;}
+  .price-card.featured .sub{color:rgba(255,255,255,0.55);}
+  .price-strike{font-size:12.5px;text-decoration:line-through;color:var(--ink-soft);opacity:0.6;}
+  .price-card.featured .price-strike{color:rgba(255,255,255,0.4);}
+  .price-num{font-family:'Sora',sans-serif;font-weight:800;font-size:36px;}
+  .price-num span{font-size:13px;font-weight:600;opacity:0.6;}
+  .price-list{list-style:none;margin:22px 0 26px;display:flex;flex-direction:column;gap:10px;}
+  .price-list li{font-size:13px;display:flex;gap:8px;}
   .price-list li::before{content:'✓';color:var(--green);font-weight:800;}
-  .price-card .btn{width:100%;justify-content:center;}
+  .price-note{font-size:11.5px;color:var(--ink-soft);margin-top:14px;}
+  .price-card.featured .price-note{color:rgba(255,255,255,0.45);}
+  .price-card .btn{width:100%;justify-content:center;margin-top:4px;}
+
+  /* FAQ */
+  .faq-list{max-width:760px;margin:0 auto;}
+  .faq-item{
+    border-bottom:1px solid var(--line);
+  }
+  .faq-q{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:24px 4px;
+    cursor:pointer;
+    font-weight:700;
+    font-size:16px;
+  }
+  .faq-q .arrow{transition:transform .3s;color:var(--orange);font-size:18px;}
+  .faq-item.open .faq-q .arrow{transform:rotate(180deg);}
+  .faq-a{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .35s ease;
+  }
+  .faq-a p{padding:0 4px 24px;font-size:14.5px;line-height:1.6;color:var(--ink-soft);max-width:640px;}
 
   /* FINAL CTA */
   .final-cta{
-    background:var(--grad);
-    border-radius:36px;
+    background:var(--ink);
+    border-radius:32px;
     margin:0 24px;
-    padding:90px 40px;
+    padding:80px 40px;
     text-align:center;
     position:relative;
     overflow:hidden;
   }
-  .final-cta::before{
-    content:'';
-    position:absolute;
-    inset:0;
-    background:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.25), transparent 50%);
-  }
-  .final-cta h2{
-    color:var(--ink);
-    font-size:clamp(28px,4vw,46px);
-    margin-bottom:18px;
-    position:relative;
-  }
-  .final-cta p{
-    color:rgba(11,31,42,0.75);
-    font-size:17px;
-    max-width:480px;
-    margin:0 auto 36px;
-    position:relative;
-  }
-  .final-cta .btn-primary{
-    background:var(--ink);
-    color:white;
-    box-shadow:0 12px 32px -8px rgba(0,0,0,0.3);
-    position:relative;
-  }
+  .final-cta h2{color:white;font-size:clamp(28px,4vw,42px);margin-bottom:16px;}
+  .final-cta p{color:rgba(255,255,255,0.6);font-size:16px;margin-bottom:32px;}
+  .final-cta .btn-primary{background:var(--grad);color:var(--ink);}
 
-  /* FOOTER */
-  footer{
-    padding:60px 0 40px;
-    text-align:center;
-  }
-  footer .logo{justify-content:center;display:flex;margin-bottom:14px;}
-  footer p{color:rgba(11,31,42,0.5);font-size:13.5px;margin-bottom:20px;}
-  .footer-links{display:flex;gap:24px;justify-content:center;margin-bottom:24px;flex-wrap:wrap;}
-  .footer-links a{color:rgba(11,31,42,0.6);text-decoration:none;font-size:13.5px;font-weight:600;}
-  .footer-note{font-size:12px;color:rgba(11,31,42,0.35);}
+  footer{padding:50px 0 36px;text-align:center;}
+  footer p{color:var(--ink-soft);font-size:13px;}
+  footer a{color:var(--ink);font-weight:700;text-decoration:none;}
 
-  /* RESPONSIVE */
   @media (max-width:900px){
-    .hero-grid{grid-template-columns:1fr;text-align:center;}
-    .hero p.lead{margin-left:auto;margin-right:auto;}
-    .hero-ctas, .hero-stats{justify-content:center;}
-    .video-banner{aspect-ratio:9/13;margin-top:36px;}
-    .journey{grid-template-columns:1fr;}
-    .journey-arrow{display:none;}
-    .bruna-inner{grid-template-columns:1fr;}
-    .bruna-img{min-height:320px;}
-    .bruna-content{padding:40px 28px;}
-    .coach-grid{grid-template-columns:1fr;}
-    .integrations{padding:56px 24px;}
-    .device-grid{grid-template-columns:repeat(2,1fr);}
-    .testi-grid{grid-template-columns:1fr;}
+    .pain-grid{grid-template-columns:1fr;}
+    .flow-grid{grid-template-columns:1fr;}
+    .get-grid{grid-template-columns:repeat(2,1fr);}
+    .testi-card{grid-template-columns:1fr;text-align:center;padding:34px 26px;}
+    .testi-photo{margin:0 auto;}
     .pricing-grid{grid-template-columns:1fr;}
-    .price-card.featured{transform:none;}
     .nav-links{display:none;}
+    .video-banner{aspect-ratio:9/13;}
   }
-
-  @media (prefers-reduced-motion: reduce){
-    *{animation:none !important;transition:none !important;}
-  }
-
-  :focus-visible{
-    outline:3px solid var(--orange);
-    outline-offset:3px;
-  }
+  @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important;}}
+  :focus-visible{outline:3px solid var(--orange);outline-offset:3px;}
 </style>
 </head>
 <body>
 
 <nav>
-  <div class="logo">Pace<span>+</span></div>
+  <div class="logo">Pace<em>+</em></div>
   <div class="nav-links">
+    <a href="#dores">Por que existe</a>
     <a href="#como-funciona">Como funciona</a>
-    <a href="#bruna">Bruna Oliveira</a>
-    <a href="#treinador">O treinador</a>
-    <a href="#integracoes">Integrações</a>
+    <a href="#oferece">O que você recebe</a>
     <a href="#planos">Planos</a>
   </div>
   <a href="#planos" class="btn btn-primary">Quero treinar</a>
 </nav>
 
 <section class="hero">
-  <div class="hero-bg"></div>
-  <div class="speed-lines">
-    <span></span><span></span><span></span><span></span>
-  </div>
+  <span class="deco" style="top:18%;left:6%;">✦</span>
+  <span class="deco" style="top:30%;right:8%;animation-delay:1.5s;">⚡</span>
+  <span class="deco" style="top:10%;right:20%;animation-delay:3s;">✦</span>
+  <span class="deco" style="top:24%;left:18%;animation-delay:2s;">✦</span>
+
   <div class="container hero-top reveal in">
-    <div class="eyebrow" style="margin:0 auto 18px;width:fit-content;"><span class="dot"></span> Novo em Santa Catarina</div>
-    <h1>Treino <span class="gradient-text">feito pra você</span>.<br>Acompanhado por quem entende de corrida.</h1>
-    <p class="lead">No Pace+, cada plano é construído em torno do seu corpo, sua rotina e seu objetivo — e passa pelo cuidado de um profissional de educação física antes de chegar até você.</p>
+    <div class="eyebrow" style="justify-content:center;width:fit-content;margin:0 auto 18px;"><span class="dot"></span> Treino personalizado · Pace+</div>
+    <h1>Chega de treinar <em>sem direção</em>.</h1>
+    <p class="lead">Plano de corrida pensado pro seu corpo, sua rotina e seu objetivo — revisado e validado por um profissional antes de chegar até você.</p>
     <div class="hero-ctas">
-      <a href="#planos" class="btn btn-primary">Quero treinar com o Pace+</a>
+      <a href="#planos" class="btn btn-primary">💬 Quero meu plano</a>
       <a href="#como-funciona" class="btn btn-ghost">Ver como funciona</a>
     </div>
-    <div class="hero-stats">
-      <div class="stat"><div class="num gradient-text">+500</div><div class="label">corredores em SC</div></div>
-      <div class="stat"><div class="num gradient-text">100%</div><div class="label">planos revisados por treinador</div></div>
-      <div class="stat"><div class="num gradient-text">4.9★</div><div class="label">avaliação média</div></div>
+    <div class="proof-row">
+      <div class="proof-avatars">
+        <span>BR</span><span>RM</span><span>JT</span>
+      </div>
+      <div class="proof-text"><b>+500 corredores</b> já treinam com o Pace+</div>
     </div>
   </div>
 
@@ -669,157 +409,158 @@
   </div>
 </section>
 
+<div class="marquee-wrap">
+  <div class="marquee">
+    <span>Plano 100% personalizado</span>
+    <span>Validado por treinador real</span>
+    <span>Ajustes toda semana</span>
+    <span>Pace ideal pra cada treino</span>
+    <span>Acompanhamento contínuo</span>
+    <span>Plano 100% personalizado</span>
+    <span>Validado por treinador real</span>
+    <span>Ajustes toda semana</span>
+    <span>Pace ideal pra cada treino</span>
+    <span>Acompanhamento contínuo</span>
+  </div>
+</div>
+
+<section id="dores">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="pain-tag">😮‍💨 O problema</div>
+      <h2>Você ainda treina <em>assim?</em></h2>
+    </div>
+    <div class="pain-grid">
+      <div class="pain-card reveal">
+        <div class="pain-num">01</div>
+        <span class="pain-icon">📋</span>
+        <h3>Plano genérico baixado da internet</h3>
+        <p>O mesmo treino pra todo mundo, sem considerar seu pace atual, sua rotina ou sua prova-alvo.</p>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-num">02</div>
+        <span class="pain-icon">📈</span>
+        <h3>Treino que nunca evolui</h3>
+        <p>Você melhora, mas o plano continua igual — sem ajuste de volume, intensidade ou progressão.</p>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-num">03</div>
+        <span class="pain-icon">🤕</span>
+        <h3>Medo de se machucar treinando sozinho</h3>
+        <p>Sem ninguém revisando, fica fácil exagerar no volume ou ignorar um sinal de lesão.</p>
+      </div>
+      <div class="pain-card reveal">
+        <div class="pain-num">04</div>
+        <span class="pain-icon">😶</span>
+        <h3>Sensação de estar treinando no escuro</h3>
+        <p>Você se esforça, mas não sabe se está no caminho certo pro seu objetivo real.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="como-funciona">
   <div class="container">
-    <div class="section-head reveal">
-      <div class="eyebrow" style="margin:0 auto 18px;width:fit-content;"><span class="dot"></span> Como funciona</div>
-      <h2>Um plano pensado pra você,<br>não pra qualquer corredor</h2>
-      <p>Três passos simples entre você e o seu próximo PR.</p>
-    </div>
-    <div class="journey">
-      <div class="journey-card reveal">
-        <div class="journey-icon">🎯</div>
-        <h3>Conte seus objetivos</h3>
-        <p>Sua distância, seu ritmo atual, sua rotina e a prova que você está mirando. Tudo isso molda o seu plano desde o início.</p>
-        <div class="journey-arrow">→</div>
-      </div>
-      <div class="journey-card reveal">
-        <div class="journey-icon">📋</div>
-        <h3>Seu plano é montado</h3>
-        <p>Sua planilha personalizada é construída com base no seu perfil, sua evolução e o tempo que você tem disponível pra treinar.</p>
-        <div class="journey-arrow">→</div>
-      </div>
-      <div class="journey-card reveal">
-        <div class="journey-icon">✓</div>
-        <h3>Treinador revisa e libera</h3>
-        <p>Um profissional de verdade analisa cada plano antes de chegar até você. Nenhum treino sai sem aval humano.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="bruna">
-  <div class="container">
-    <div class="bruna reveal">
-      <div class="bruna-inner">
-        <div class="bruna-img">
-          <img src="https://images.unsplash.com/photo-1502904550040-7534597429ae?w=800&q=80" alt="Corredora treinando ao amanhecer">
-        </div>
-        <div class="bruna-content">
-          <div class="bruna-badge">🏅 Atleta patrocinada HOAD</div>
-          <h2>Bruna Oliveira agora treina (e indica) o Pace+</h2>
-          <p class="bruna-quote">"Eu sei o quanto faz diferença ter um treino pensado pra mim, com acompanhamento de verdade. O Pace+ entrega isso sem perder o cuidado humano que todo atleta precisa."</p>
-          <div class="bruna-name">Bruna Oliveira</div>
-          <div class="bruna-role">Corredora de rua profissional · Santa Catarina</div>
-          <a href="#planos" class="btn btn-primary">Treinar com quem treina a Bruna</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="treinador">
-  <div class="container">
-    <div class="coach-grid">
-      <div class="coach-visual reveal">
-        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&q=80" alt="Profissional analisando dados de treino">
-        <div class="coach-flow">
-          <div class="check-circle">✓</div>
-          <div>
-            <div class="t">Plano revisado e aprovado</div>
-            <div class="s">por um profissional de educação física</div>
-          </div>
-        </div>
-      </div>
+    <div class="flow-grid">
       <div class="reveal">
-        <div class="eyebrow"><span class="dot"></span> Um treinador de verdade, do seu lado</div>
-        <h2>Cada planilha passa por um olhar humano antes de chegar até você</h2>
-        <p style="color:rgba(11,31,42,0.6);font-size:16px;line-height:1.65;margin-top:14px;">Quem entende de corrida sabe que cada corpo responde de um jeito. Por isso, nosso profissional revisa, ajusta e aprova cada plano — pensando na sua saúde, sua rotina e seus objetivos reais.</p>
-        <ul class="coach-list">
-          <li>
-            <div class="ico">1</div>
-            <div class="txt"><b>Análise individual</b><span>Cada plano é revisado considerando seu histórico e limitações.</span></div>
-          </li>
-          <li>
-            <div class="ico">2</div>
-            <div class="txt"><b>Ajustes finos</b><span>Volume, intensidade e progressão calibrados por quem entende de fisiologia.</span></div>
-          </li>
-          <li>
-            <div class="ico">3</div>
-            <div class="txt"><b>Acompanhamento contínuo</b><span>Seu plano evolui junto com você, semana após semana.</span></div>
-          </li>
+        <div class="eyebrow"><span class="dot"></span> Como funciona</div>
+        <h2 style="font-size:clamp(26px,3.4vw,38px);line-height:1.15;margin-bottom:14px;">Tudo pensado <em>pra você</em></h2>
+        <p style="color:var(--ink-soft);font-size:15.5px;line-height:1.6;">Você conta seu objetivo e sua rotina, recebe um plano construído em torno disso — e antes de chegar até você, um profissional de educação física revisa e aprova cada detalhe.</p>
+        <ul class="check-list">
+          <li><span class="ico">✓</span> Plano construído com base no seu perfil e objetivo</li>
+          <li><span class="ico">✓</span> Revisão e aval de um treinador real</li>
+          <li><span class="ico">✓</span> Pace, volume e descanso ajustados toda semana</li>
+          <li><span class="ico">✓</span> Acompanhamento da sua evolução ao longo do plano</li>
         </ul>
       </div>
+      <div class="flow-visual reveal">
+        <div class="flow-card">
+          <div class="flow-check">1</div>
+          <div><div class="t">Conte seu objetivo</div><div class="s">Distância, pace atual e prova-alvo</div></div>
+        </div>
+        <div class="flow-card">
+          <div class="flow-check">2</div>
+          <div><div class="t">Seu plano é montado</div><div class="s">Personalizado pra sua rotina</div></div>
+        </div>
+        <div class="flow-card">
+          <div class="flow-check">3</div>
+          <div><div class="t">Treinador revisa e libera</div><div class="s">Nenhum treino sai sem aval humano</div></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<section id="integracoes">
+<section id="oferece">
   <div class="container">
-    <div class="integrations reveal">
-      <div class="integrations-head">
-        <div class="eyebrow"><span class="dot"></span> Conectado com seu treino</div>
-        <h2>Seu relógio, seus dados,<br>seu plano sempre atualizado</h2>
-        <p>Conecte seu app ou relógio favorito e acompanhe sua evolução real direto no Pace+.</p>
+    <div class="section-head center reveal">
+      <div class="eyebrow" style="justify-content:center;margin:0 auto 18px;"><span class="dot"></span> O que você recebe</div>
+      <h2>Tudo pronto, <em>no seu ritmo</em></h2>
+    </div>
+    <div class="get-grid">
+      <div class="get-card reveal">
+        <div class="get-num">01</div>
+        <span class="get-icon">🎯</span>
+        <h3>Plano personalizado</h3>
+        <p>Construído com base no seu pace atual, rotina e objetivo real.</p>
       </div>
-      <div class="device-grid">
-        <div class="device-card">
-          <div class="device-icon">🟠</div>
-          <div class="name">Strava</div>
-          <div class="status">Em breve</div>
-        </div>
-        <div class="device-card">
-          <div class="device-icon">🔵</div>
-          <div class="name">Garmin</div>
-          <div class="status">Em breve</div>
-        </div>
-        <div class="device-card">
-          <div class="device-icon">⚫</div>
-          <div class="name">Polar</div>
-          <div class="status">Em breve</div>
-        </div>
-        <div class="device-card">
-          <div class="device-icon">⚪</div>
-          <div class="name">Amazfit</div>
-          <div class="status">Em breve</div>
-        </div>
+      <div class="get-card reveal">
+        <div class="get-num">02</div>
+        <span class="get-icon">✅</span>
+        <h3>Validação profissional</h3>
+        <p>Cada plano é revisado e aprovado por um treinador antes de chegar até você.</p>
       </div>
-      <div class="integrations-note">Integrações em desenvolvimento — sua corrida vai falar diretamente com o seu plano.</div>
+      <div class="get-card reveal">
+        <div class="get-num">03</div>
+        <span class="get-icon">🔄</span>
+        <h3>Ajustes semanais</h3>
+        <p>Seu plano evolui junto com você, sem ficar estagnado.</p>
+      </div>
+      <div class="get-card reveal">
+        <div class="get-num">04</div>
+        <span class="get-icon">📊</span>
+        <h3>Acompanhamento de evolução</h3>
+        <p>Veja seu progresso de pace e volume ao longo do tempo.</p>
+      </div>
+      <div class="get-card reveal">
+        <div class="get-num">05</div>
+        <span class="get-icon">💬</span>
+        <h3>Suporte direto</h3>
+        <p>Dúvida no treino? Fala direto com o time pelo WhatsApp.</p>
+      </div>
+      <div class="get-card reveal">
+        <div class="get-num">06</div>
+        <span class="get-icon">🗓️</span>
+        <h3>Periodização de prova</h3>
+        <p>Plano estruturado pra chegar no seu melhor no dia da corrida.</p>
+      </div>
+      <div class="get-card reveal">
+        <div class="get-num">07</div>
+        <span class="get-icon">⌚</span>
+        <h3>Conecte seu relógio</h3>
+        <p>Integração com Strava, Garmin, Polar e Amazfit — em breve.</p>
+      </div>
+      <div class="get-card reveal">
+        <div class="get-num">08</div>
+        <span class="get-icon">🛟</span>
+        <h3>Time por trás</h3>
+        <p>Toda a parte técnica e de revisão fica com a gente. Você só corre.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<section id="depoimentos">
+<section id="depoimento">
   <div class="container">
-    <div class="section-head reveal">
-      <div class="eyebrow" style="margin:0 auto 18px;width:fit-content;"><span class="dot"></span> Comunidade</div>
-      <h2>Quem já está correndo com o Pace+</h2>
-      <p>Corredores de Balneário Camboriú, Itajaí e região já estão na nossa fase de testes.</p>
-    </div>
-    <div class="testi-grid">
-      <div class="testi-card reveal">
-        <div class="testi-top">
-          <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=200&q=80" alt="">
-          <div><div class="n">Rafael M.</div><div class="c">Corredor amador · BC</div></div>
-        </div>
-        <p>"Finalmente um treino que muda conforme minha semana muda. E saber que tem alguém validando me dá muito mais confiança."</p>
-        <div class="stars">★★★★★</div>
-      </div>
-      <div class="testi-card reveal">
-        <div class="testi-top">
-          <img src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=200&q=80" alt="">
-          <div><div class="n">Juliana T.</div><div class="c">Preparação 21km · Itajaí</div></div>
-        </div>
-        <p>"Baixei pensando em testar e não parei mais. O plano evoluiu comigo e o suporte do treinador faz toda diferença."</p>
-        <div class="stars">★★★★★</div>
-      </div>
-      <div class="testi-card reveal">
-        <div class="testi-top">
-          <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=200&q=80" alt="">
-          <div><div class="n">Diego S.</div><div class="c">Primeira maratona · Camboriú</div></div>
-        </div>
-        <p>"Treinar sozinho me dava insegurança. Com o Pace+ sinto que tenho um time inteiro cuidando da minha evolução."</p>
-        <div class="stars">★★★★★</div>
+    <div class="testi-card reveal">
+      <img class="testi-photo" src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?w=300&q=80" alt="Bruna Oliveira">
+      <div>
+        <div class="testi-tag">⭐ Atleta real</div>
+        <div class="testi-stars">★★★★★</div>
+        <p class="testi-quote">"Eu sei o quanto faz diferença ter um treino pensado pra mim, com acompanhamento de verdade. O Pace+ entrega isso sem perder o cuidado humano que todo atleta precisa."</p>
+        <div class="testi-name">Bruna Oliveira</div>
+        <div class="testi-role">Corredora de rua profissional · Patrocinada HOAD</div>
+        <div class="testi-verified">✓ Verificado</div>
       </div>
     </div>
   </div>
@@ -827,28 +568,29 @@
 
 <section id="planos">
   <div class="container">
-    <div class="section-head reveal">
-      <div class="eyebrow" style="margin:0 auto 18px;width:fit-content;"><span class="dot"></span> Planos</div>
-      <h2>Escolha como quer treinar</h2>
-      <p>Comece grátis ou avance direto para o acompanhamento completo.</p>
+    <div class="section-head center reveal">
+      <div class="price-launch">🎉 Lançamento · vagas com desconto especial</div>
+      <h2>Simples e <em>sem surpresa</em></h2>
     </div>
     <div class="pricing-grid">
       <div class="price-card reveal">
         <h3>Start</h3>
-        <div class="desc">Pra quem quer experimentar</div>
-        <div class="price-val">Grátis</div>
+        <div class="sub">Pra quem quer experimentar</div>
+        <div class="price-num">Grátis</div>
         <ul class="price-list">
           <li>1 plano de treino personalizado</li>
           <li>Acompanhamento básico de pace</li>
           <li>Acesso à comunidade</li>
         </ul>
         <a href="#" class="btn btn-ghost">Começar grátis</a>
+        <div class="price-note">Ideal pra testar antes de assinar</div>
       </div>
       <div class="price-card featured reveal">
-        <div class="featured-badge">MAIS ESCOLHIDO</div>
+        <div class="price-badge">⚡ Mais popular</div>
         <h3>Pro</h3>
-        <div class="desc">Treino completo, revisado toda semana</div>
-        <div class="price-val">R$ 79<span>/mês</span></div>
+        <div class="sub">Treino completo, revisado toda semana</div>
+        <div class="price-strike">de R$ 99/mês</div>
+        <div class="price-num">R$79<span>/mês</span></div>
         <ul class="price-list">
           <li>Planilhas semanais personalizadas</li>
           <li>Revisão e aval de treinador real</li>
@@ -856,11 +598,12 @@
           <li>Acompanhamento de evolução</li>
         </ul>
         <a href="#" class="btn btn-primary">Assinar Pro</a>
+        <div class="price-note">Cancela quando quiser</div>
       </div>
       <div class="price-card reveal">
         <h3>Elite</h3>
-        <div class="desc">Pra quem mira uma prova específica</div>
-        <div class="price-val">R$ 149<span>/mês</span></div>
+        <div class="sub">Pra quem mira uma prova específica</div>
+        <div class="price-num">R$149<span>/mês</span></div>
         <ul class="price-list">
           <li>Tudo do plano Pro</li>
           <li>Periodização para prova-alvo</li>
@@ -868,6 +611,38 @@
           <li>Análise mensal de performance</li>
         </ul>
         <a href="#" class="btn btn-ghost">Assinar Elite</a>
+        <div class="price-note">Pra corredores sérios</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="container">
+    <div class="section-head center reveal">
+      <div class="eyebrow" style="justify-content:center;margin:0 auto 18px;"><span class="dot"></span> Dúvidas</div>
+      <h2>Perguntas <em>frequentes</em></h2>
+    </div>
+    <div class="faq-list reveal">
+      <div class="faq-item">
+        <div class="faq-q">Em quanto tempo recebo meu plano? <span class="arrow">▾</span></div>
+        <div class="faq-a"><p>Em até 2 dias úteis após você preencher seu perfil de corredor (objetivo, pace atual e rotina disponível).</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Preciso ter experiência com corrida? <span class="arrow">▾</span></div>
+        <div class="faq-a"><p>Não. O plano é construído de acordo com seu nível atual, seja você iniciante ou já estiver treinando para uma maratona.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Quem revisa o meu plano? <span class="arrow">▾</span></div>
+        <div class="faq-a"><p>Um profissional de educação física analisa, ajusta e aprova cada plano antes de liberá-lo, considerando sua saúde e seus objetivos reais.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Posso cancelar quando quiser? <span class="arrow">▾</span></div>
+        <div class="faq-a"><p>Sim, os planos Pro e Elite são mensais e você pode cancelar a qualquer momento, sem multa.</p></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">O app conecta com meu relógio? <span class="arrow">▾</span></div>
+        <div class="faq-a"><p>Estamos lançando a integração com Strava, Garmin, Polar e Amazfit em breve, pra trazer seus dados reais de corrida direto pro seu plano.</p></div>
       </div>
     </div>
   </div>
@@ -876,38 +651,43 @@
 <section>
   <div class="container">
     <div class="final-cta reveal">
-      <h2>Seu próximo PR começa<br>com o treino certo</h2>
-      <p>Plano feito pra você, validado por gente que entende de corrida de verdade.</p>
-      <a href="#planos" class="btn btn-primary">Quero treinar com o Pace+</a>
+      <span class="deco" style="top:12%;left:8%;">✦</span>
+      <span class="deco" style="top:20%;right:10%;animation-delay:1s;">⚡</span>
+      <h2>Pronto pra treinar <em>com direção?</em></h2>
+      <p>Comece grátis ou já avance direto pro plano completo, revisado por um profissional.</p>
+      <a href="#planos" class="btn btn-primary">💬 Quero meu plano</a>
     </div>
   </div>
 </section>
 
 <footer>
   <div class="container">
-    <div class="logo">Pace<span>+</span></div>
-    <p>Santa Catarina · Treino personalizado com aval de profissional</p>
-    <div class="footer-links">
-      <a href="#como-funciona">Como funciona</a>
-      <a href="#bruna">Bruna Oliveira</a>
-      <a href="#treinador">O treinador</a>
-      <a href="#integracoes">Integrações</a>
-      <a href="#planos">Planos</a>
-    </div>
-    <div class="footer-note">© 2026 Pace+. Protótipo conceitual — fotos meramente ilustrativas, a serem substituídas por imagens reais.</div>
+    <p>Pace+ é um produto <a href="#">EzStudio</a> · Todos os direitos reservados</p>
   </div>
 </footer>
 
 <script>
   const reveals = document.querySelectorAll('.reveal');
   const obs = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        e.target.classList.add('in');
+    entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+  },{threshold:0.12});
+  reveals.forEach(el=>obs.observe(el));
+
+  document.querySelectorAll('.faq-item').forEach(item=>{
+    const q = item.querySelector('.faq-q');
+    const a = item.querySelector('.faq-a');
+    q.addEventListener('click', ()=>{
+      const isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i=>{
+        i.classList.remove('open');
+        i.querySelector('.faq-a').style.maxHeight = null;
+      });
+      if(!isOpen){
+        item.classList.add('open');
+        a.style.maxHeight = a.scrollHeight + 'px';
       }
     });
-  },{threshold:0.15});
-  reveals.forEach(el=>obs.observe(el));
+  });
 </script>
 
 </body>
